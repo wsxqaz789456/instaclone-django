@@ -13,6 +13,8 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 from pathlib import Path
 import os
 import environ
+import sentry_sdk
+from sentry_sdk.integrations.django import DjangoIntegration
 import dj_database_url
 
 env = environ.Env()
@@ -181,3 +183,18 @@ REST_FRAMEWORK = {
         "config.authentication.JWTAuthenitcation",
     ]
 }
+
+if not DEBUG:
+    sentry_sdk.init(
+        dsn="https://bc7f87f0dd33415f88df03a618782281@o4504506340409344.ingest.sentry.io/4504693056143360",
+        integrations=[
+            DjangoIntegration(),
+        ],
+        # Set traces_sample_rate to 1.0 to capture 100%
+        # of transactions for performance monitoring.
+        # We recommend adjusting this value in production.
+        traces_sample_rate=1.0,
+        # If you wish to associate users to errors (assuming you are using
+        # django.contrib.auth) you may enable sending PII data.
+        send_default_pii=True,
+    )
