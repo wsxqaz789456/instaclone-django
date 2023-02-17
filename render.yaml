@@ -1,0 +1,22 @@
+databases:
+  - name: instaclone
+    databaseName: instaclone
+    user: instaclone
+    region: singapore
+
+services:
+  - type: web
+    name: instaclone
+    env: python
+    region: singapore
+    buildCommand: "./build.sh"
+    startCommand: "gunicorn mysite.wsgi:application"
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: instaclone
+          property: connectionString
+      - key: SECRET_KEY
+        generateValue: true
+      - key: WEB_CONCURRENCY
+        value: 4
