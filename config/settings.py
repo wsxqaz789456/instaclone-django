@@ -172,11 +172,18 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 AUTH_USER_MODEL = "users.User"
 # 직접 만든 유저 모델을 사용하기
 
-CORS_ALLOWED_ORIGINS = ["http://127.0.0.1:3000"]
+
+if DEBUG:
+    CORS_ALLOWED_ORIGINS = ["http://127.0.0.1:3000"]
+    CSRF_TRUSTED_ORIGINS = ["http://127.0.0.1:3000"]
+
+else:
+    CORS_ALLOWED_ORIGINS = ["https://instaclone.site"]
+    CSRF_TRUSTED_ORIGINS = ["https://instaclone.site"]
+
 
 CORS_ALLOW_CREDENTIALS = True
 
-CSRF_TRUSTED_ORIGINS = ["http://127.0.0.1:3000"]
 
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": [
