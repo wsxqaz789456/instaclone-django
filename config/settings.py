@@ -37,6 +37,7 @@ DEBUG = "RENDER" not in os.environ
 
 ALLOWED_HOSTS = [
     "localhost",
+    "backend.instaclone.site",
 ]
 
 RENDER_EXTERNAL_HOSTNAME = os.environ.get("RENDER_EXTERNAL_HOSTNAME")
@@ -187,6 +188,9 @@ REST_FRAMEWORK = {
 }
 
 if not DEBUG:
+    SESSION_COOKIE_DOMAIN = ".instaclone.site"
+    CSRF_COOKIE_DOMAIN = ".instaclone.site"
+
     sentry_sdk.init(
         dsn="https://bc7f87f0dd33415f88df03a618782281@o4504506340409344.ingest.sentry.io/4504693056143360",
         integrations=[
